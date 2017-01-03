@@ -4,6 +4,7 @@
 \usepackage[a4paper, top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry}  % This is the standard setting of thesis of NTHU. Do not change it.
 \usepackage{rotating, booktabs}  % For table-rotating 
 \usepackage{wallpaper}  % For watermark
+\usepackage{mathtools}
 %\CenterWallPaper{.18}{nthu-logo.jpg}  % Watermark of NTHU
 %\usepackage{showlabels}  % When there are many equations in your thesis, it is a good tool to show them before printing the labels out. But remember comment it when you finish your thesis.
 \numberwithin{equation}{subsection}
@@ -133,19 +134,19 @@ Before stating the main theorem, we first introduce the following Lemma.
 \begin{lemma}
 	Let $m \in \mathbb{Z}^+$ and let $\varPhi$ in $\mathcal{S}(\mathbb{R}^n)$ satisfy $\int_{\mathbb{R}^n}\varPhi(x)dx = 1$, Then there exists a constant $C_0(\varPhi, m)$ such that for any $\varPsi$ in $\mathcal{S}(\mathbb{R}^n)$, there are Schwartz functions $\varTheta^{(s)}$, $0\le s\le 1$, with the properties
 	\begin{align}
-		\varPsi(x) = \int_{0}^{1}(\varTheta^{(s)}*\varPhi_s)(x)ds \label{lemma}
+		\varPsi(x) = \int_{0}^{1}(\varTheta^{(s)}*\varPhi_s)(x)ds \label{lemma1}
 	\end{align}
 	and
 	\begin{align}
-		\int_{\mathbb{R}^n}(1+|x|)^m\left| \varTheta^{(s)}(x) \right| dx \le C_0(\varPhi, m)s^m\mathfrak{N}_m(\varPsi)
+		\int_{\mathbb{R}^n}(1+|x|)^m\left| \varTheta^{(s)}(x) \right| dx \le C_0(\varPhi, m)s^m\mathfrak{N}_m(\varPsi) \label{lemma2}
 	\end{align}
 \end{lemma}
 \begin{proof}
 	We start with a smooth function $\zeta$ supported in $[0,1]$ that satisfies
 	\begin{align*}
-		0\le \zeta &\le \frac{2s^m}{m!} \qquad \text{for all } 0\le s \le 1 \\ 
+		0\le \zeta(s) &\le \frac{2s^m}{m!} \qquad \text{for all } 0\le s \le 1 \\ 
 		\zeta(s) &= \frac{s^m}{m!} \qquad \text{ for all } 0 \le s \le \frac{1}{2} \\
-		\frac{d^r\zeta}{dt^r}(1) &= 0 \qquad \quad \text{ for all } 0\le r \le m+1 \\
+		\frac{d^r\zeta}{dt^r}(1) &= 0 \qquad \quad \text{ for all } 0\le r \le m+1 \\ \label{lemma3}
 	\end{align*}
 	We define
 	\begin{align}
@@ -155,13 +156,13 @@ Before stating the main theorem, we first introduce the following Lemma.
 	\begin{align*}
 		\varXi^{(s)} = (-1)^{m+1}\zeta(s)\frac{d^{m+1}\zeta}{ds^{m+1}}\left( \stackrel{\text{m+2 terms}}{\overbrace{\varPhi_s* \cdots *\varPhi_s}}\right) * \varPsi,
 	\end{align*}
-	and we claim that (\ref{lemma}) holds for this choice of $\varTheta^{(s)}$. To verify this assertion, we apply integration by parts to write
+	and we claim that (\ref{lemma1}) holds for this choice of $\varTheta^{(s)}$. To verify this assertion, we apply integration by parts to write
 	\begin{align*}
 		\int_{0}^{1}-\frac{d^{m+1}\zeta}{ds^{m+1}}(s)( \stackrel{\text{m+2 terms}}{\overbrace{\varPhi* \cdots *\varPhi}})_s * \varPsi ds = -\stackrel{=0}{\overbrace{\frac{d^m\zeta}{ds^m}(1)}}( \stackrel{\text{m+2 terms}}{\overbrace{\varPhi* \cdots *\varPhi}})_1 * \varPsi \\
 		+\stackrel{=1}{\overbrace{\frac{d^m\zeta}{ds^m}(0)}}\lim_{s\rightarrow 0^+}( \stackrel{\text{m+2 terms}}{\overbrace{\varPhi* \cdots *\varPhi}})_s*\varPsi\\
 		+\int_{0}^{1}\frac{d^m\zeta}{ds^m}(s)\frac{d}{ds}( \stackrel{\text{m+2 terms}}{\overbrace{\varPhi* \cdots *\varPhi}})_s*\varPsi ds
 	\end{align*}
-	Therefore appling $m+1$ times integration by parts we rewrite (\ref{lemma}) as 
+	Therefore appling $m+1$ times integration by parts we rewrite (\ref{lemma1}) as 
 	\begin{align*}
 		\int_{0}^{1}\varTheta^{(s)}*\varPsi_sds = \int_{1}^{0}\varXi^{(s)}*\varPsi_sds + \frac{d^{m}\zeta}{ds^{m}}(0)\lim_{s\rightarrow 0^+}( \stackrel{\text{m+2 terms}}{\overbrace{\varPhi* \cdots *\varPhi}})_s*\varPsi\\
 		-(-1)^{m+1}\int_{0}^{1}\zeta(s)\frac{d^{m+1}}{s^{m+1}}\left( \stackrel{\text{m+2 terms}}{\overbrace{\varPhi_s* \cdots *\varPhi_s}}\right) * \varPsi ds.
@@ -174,8 +175,40 @@ Before stating the main theorem, we first introduce the following Lemma.
 	\begin{thm}
 		Let $f_{\varepsilon} = f*K_{\varepsilon}$, where $K\in L^1(\mathbb{R}^n)$ and $\int_{\mathbb{R}^n}K = 1$. If $f \in L^{\infty}(\mathbb{R}^n)$, then $f_{\varepsilon}\rightarrow f$ as $\varepsilon \rightarrow 0$ at every point of continuity of f, and the convergence is uniform on any set where f is uniformly continuous.
 	\end{thm}
-	Therefore, the lemma follows.
+	Therefore, the (\ref{lemma1}) follows. We now prove the estimate (\ref{lemma2}). Let $\varOmega$ be the (m+1)-fold convolution of $\varPhi$. For the second term on the right in (\ref{lemma3}), we note that the (m+1)st derivative of $\zeta(s)$ vanish on $[0,\frac{1}{2}]$, so that we may write
+	\begin{align*}
+	\int_{\mathbb{R}^n}(1+|x|)^m&\left| \frac{d^{m+1}\zeta(s)}{ds^{m+1}}\right| |\varOmega_s*\varPsi(x)|dx \\
+	&\le C_m\chi_{[\frac{1}{2},1]}(s)\int_{\mathbb{R}^n}(1+|x|)^m \left[ \int_{\mathbb{R}^n}\frac{1}{s^n} \left| \varOmega(\frac{x-y}{s})\right| \left| \varPsi(y)\right| dy  \right] dx \\
+	\text{\footnotesize\rlap{change of variables $\frac{x-y}{s} = x$}}\\
+	&\le C_m\chi_{[\frac{1}{2},1]}(s)\int_{\mathbb{R}^n}\int_{\mathbb{R}^n}(1+|y+sx|)^m |\varOmega(x)||\varPsi(y)|dydx\\ 
+	\text{\footnotesize\rlap{since $(1+|sx+y|)<(1+|sx|)(1+|y|)$}}\\
+	&\le C_m\chi_{[\frac{1}{2},1]}(s)\int_{\mathbb{R}^n}\int_{\mathbb{R}^n}(1+|sx|)^m |\varOmega(x)|(1+|y|)^m|\varPsi(y)|dydx\\
+	\text{\footnotesize\rlap{by $s\le 1$ and Fubini's theorem}}\\
+	&\le C_m\chi_{[\frac{1}{2},1]}(s)\left( \int_{\mathbb{R}^n}(1+|x|)^m |\varOmega(x)|dx\right) \left( \int_{\mathbb{R}^n}(1+|y|)^m|\varPsi(y)|dy \right) \\
+	%\text{\footnotesize\rlap{since $\chi_{[\frac{1}{2},1]}(s)\le 2^ms^m$}}\\
+	&\le C'_0(\varPhi,m)s^m \mathfrak{N}_N(\varPsi), \\
+	\end{align*}
+	where the last inequality follows by $\chi_{[\frac{1}{2},1]}(s)\le 1\le 2^ms^m$. To obtain a similar estimate for the first term on the right in (\ref{lemma3}), we argue that
+	\begin{align*}
+		\int_{\mathbb{R}^n}&(1+|x|)^m|\zeta(s)|\left| \frac{d^{m+1}(\varOmega_s*\varPsi)}{ds^{m+1}}(x) \right| dx \\
+		&= \int_{\mathbb{R}^n}(1+|x|)^m|\zeta(s)|\left| \frac{d^{m+1}}{ds^{m+1}}  \int_{\mathbb{R}^n}\frac{1}{s^n}\varOmega(\frac{x-y}{s})\varPsi(y) dy\right| dx \\
+		\text{\footnotesize\rlap{change of variables $\frac{x-y}{s} = y$ and move derivatives inside integral by DCT} }\\
+		&= \int_{\mathbb{R}^n}(1+|x|)^m|\zeta(s)|\left| \int_{\mathbb{R}^n}\varOmega(y)\frac{d^{m+1}\varPsi(x-sy)}{ds^{m+1}}dy\right| dx\\
+		\text{\footnotesize\rlap{since derivatives on space of Schwartz functions can be viewed as tempered distribution }}\\
+		\text{\footnotesize\rlap{and bounded by its seminorms}}\\
+		&\le C'_m \int_{\mathbb{R}^n}(1+|x|)^m|\zeta(s)| \int_{\mathbb{R}^n} |\varOmega(y)| \left[ \sum_{|\alpha|\le m+1}|\partial^\alpha\varPsi(x-sy)||y|^{|\alpha|} \right] dydx \\	
+		\text{\footnotesize\rlap{change of variables $x-sy = x$ and use the fact $|y|^{|\alpha|}\le (1+|y|)^{m+1}$ and Tonelli's theorem}}\\
+		&\le C'_m|\zeta(s)|\int_{\mathbb{R}^n}\int_{\mathbb{R}^n}(1+|x+sy|)^m |\varOmega(y)|\left[ \sum_{|\alpha|\le m+1}|\partial^\alpha\varPsi(x)|(1+|y|)^{m+1} \right] dydx \\
+		\text{\footnotesize\rlap{use $(1+|sx+y|)<(1+|sx|)(1+|y|)$ and $s\le 1$ again}}\\
+		&\le C'_m|\zeta(s)|\int_{\mathbb{R}^n}(1+|y|)^m|\varOmega(y)|(1+|y|)^{m+1}dy \int_{\mathbb{R}^n}(1+|x|)^m\sum_{|\alpha|\le m+1}|\partial^\alpha\varPsi(x)|dx\\
+		\text{\footnotesize\rlap{by the defnition of $0\le \zeta(s) \le \frac{2s^m}{m!} \quad$ for all  $0\le s \le 1$}}\\
+		&\le C''_0(\varPhi,m)s^m \mathfrak{N}_N(\varPsi), \\
+	\end{align*}
+	We now let $C_0(\varPhi,m) =  C'_0(\varPhi,m) + C''_0(\varPhi,m)$ to obtain the desirable result (\ref{lemma2}).
 \end{proof}
+
+\subsection{The main theorem}
+
 分隔線
 
 
